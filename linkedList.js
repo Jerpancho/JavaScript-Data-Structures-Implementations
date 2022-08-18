@@ -85,15 +85,111 @@ class SinglyLinkedList {
         this.length += 1;
         return this;
     }
+    // gets the value of the node at the given index
+    get(i) {
+        if (i < 0 || i >= this.length) return undefined;
+        let node = this.head;
+        for (let j = 0; j < i; j++) {
+            node = node.next;
+        }
+        return node;
+    }
+    // goes to the node at the given index and changes its value
+    set(i, val) {
+        let node = this.get(i);
+        if (node) {
+            node.val = val;
+            return true;
+        }
+        return false;
+    }
+    // insert a new node at the given index
+    insert(i, value) {
+        if (i < 0 || i > this.length) return false;
+
+        if (i === this.length) {
+            this.push(value);
+        }
+        else if (i === 0) {
+            this.unShift(value);
+        }
+        else {
+            let newNode = new Node(value);
+            let node = this.get(i - 1);
+
+            //1->5 insert(3) ==> 1->3->5
+            newNode.next = node.next;
+            node.next = newNode;
+        }
+        this.length += 1;
+        return true;
+    }
+    // removes the node at the given index, return the removed item
+    remove(i) {
+        if (i < 0 || i >= this.length) return false;
+        // if at the end of the list then just remove end
+        if (i === this.length - 1) {
+            return this.pop();
+        }
+        if (i === 0) {
+            return this.shift();
+        }
+        let node = this.get(i - 1);
+        let removed = node.next;
+
+        node.next = node.next.next;
+        this.length -= 1;
+        return removed;
+    }
+    // reverses the nodes of the linked list
+    reverse() {
+        // swap the head and the tail
+        let curr = this.head;
+        this.head = this.tail;
+        this.tail = curr;
+        // 
+
+        let next;
+        let prev = null;
+        for (let i = 0; i < this.length; i++) {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return this;
+    }
+    reverseHead() {
+        let prev = null;
+        let curr = this.head;
+        let next;
+
+        this.tail = curr;
+        // while curr is not null
+        while (curr) {
+            // keep track of the next node before severing and repairing connection
+            next = curr.next;
+            // perform reverse operation
+            curr.next = prev;
+            // move the operation forward
+            prev = curr;
+            curr = next;
+        }
+        // the new head will just be previous
+        this.head = prev;
+        // otherwise return whole list
+        return this;
+    }
     printList() {
+        let arr = [];
         if (this.head != null) {
             let node = this.head;
             while (node != null) {
-                console.log(node.val);
+                arr.push(node.val);
                 node = node.next;
             }
         }
-
+        console.log(arr);
     }
 }
 
@@ -103,8 +199,7 @@ list.push("test");
 list.push("another");
 list.push("World");
 list.push("final");
-list.pop();
-list.shift();
-list.shift();
 list.unShift("Hello");
+list.printList();
+list.reverseHead();
 list.printList();
