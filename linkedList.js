@@ -134,6 +134,7 @@ class SinglyLinkedList {
         if (i === 0) {
             return this.shift();
         }
+        
         let node = this.get(i - 1);
         let removed = node.next;
 
