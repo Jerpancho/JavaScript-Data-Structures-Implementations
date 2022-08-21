@@ -134,7 +134,7 @@ class SinglyLinkedList {
         if (i === 0) {
             return this.shift();
         }
-        
+
         let node = this.get(i - 1);
         let removed = node.next;
 
@@ -165,7 +165,9 @@ class SinglyLinkedList {
         let curr = this.head;
         let next;
 
+        // not needed if not keeping track of tail
         this.tail = curr;
+
         // while curr is not null
         while (curr) {
             // keep track of the next node before severing and repairing connection
