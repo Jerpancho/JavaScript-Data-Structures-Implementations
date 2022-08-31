@@ -1,3 +1,4 @@
+const { Queue } = require("./queue");
 class Node {
     constructor(val) {
         this.val = val;
@@ -70,21 +71,21 @@ class Tree {
     BFS() {
         if (!this.root) return undefined;
         //queue
-        let q = [];
+        let q = new Queue();
         let list = [];
-        q.push(this.root);
+        q.enqueue_node(this.root);
         // while the q is not empty (has the root node)
         // dequeue from the q and if that node has left or right nodes, push them into the queue
         // keep track of dequeued nodes by pushing onto the list
         // if we're doing something else with the nodes instead perform different operation** 
-        while (q.length !== 0) {
-            let node = q.shift();
-            list.push(node.val);
+        while (q.size !== 0) {
+            let node = q.dequeue();
+            if (node) list.push(node.val);
             if (node.left) {
-                q.push(node.left);
+                q.enqueue_node(node.left);
             }
             if (node.right) {
-                q.push(node.right);
+                q.enqueue_node(node.right);
             }
         }
 
@@ -159,7 +160,7 @@ tree.insert(53);
 tree.insert(7);
 tree.insert(3);
 tree.insert(2);
-console.log(tree);
+// console.log(tree);
 console.log(tree.BFS());
-console.log(tree.BFS2(8));
-console.log(tree.DFSPre());
+// console.log(tree.BFS2(8));
+// console.log(tree.DFSPre());

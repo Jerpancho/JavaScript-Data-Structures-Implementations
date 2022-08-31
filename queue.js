@@ -24,6 +24,18 @@ class Queue {
         this.size++;
         return this.size;
     }
+    enqueue_node(node) {
+        if (!this.head) {
+            this.head = node;
+            this.tail = node;
+        }
+        else {
+            this.tail.next = node;
+            this.tail = this.tail.next;
+        }
+        this.size++;
+        return this.size;
+    }
     // shift for dequeue
     dequeue() {
         if (!this.head) return undefined;
@@ -50,10 +62,12 @@ class Queue {
     }
 }
 
-let q = new Queue();
-q.enqueue(1);
-q.enqueue(2);
-q.enqueue(3);
-q.print();
-q.dequeue();
-q.print();
+// let q = new Queue();
+// q.enqueue(1);
+// q.enqueue(2);
+// q.enqueue(3);
+// q.print();
+// q.dequeue();
+// q.print();
+
+module.exports = { Queue };
